@@ -12,7 +12,6 @@ public class Sistema implements IObligatorio {
     private Lista<Avion> aviones;
     private Lista<Cliente> clientes;
     private Lista<Vuelo> vuelos;
-    Testing
 
     @Override
     public Retorno crearSistemaDeGestion(){
@@ -21,14 +20,16 @@ public class Sistema implements IObligatorio {
 
     @Override
     public Retorno crearAerolinea(String nombre, String pais, int cantMaxAviones) {
+      
+        Aerolinea nuevaAerolinea = new Aerolinea(nombre, pais, cantMaxAviones);
         
-      /*if(aerolineas.buscarElemento(nombre)){
-          return Retorno.error1();
-        } else if( cantMaxAviones <= 0){
+        if(aerolineas.pertenece(nuevaAerolinea)){
+            return Retorno.error1();
+        }else if(nuevaAerolinea.getCantMaxAviones() <= 0){
           return Retorno.error2();
         }
         
-        aerolineas.agregarInicio(new Aerolinea(nombre, pais, cantMaxAviones));*/
+        aerolineas.agregarInicio(nuevaAerolinea);
         
         return Retorno.ok();
     }

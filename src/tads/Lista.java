@@ -12,15 +12,30 @@ public class Lista <T extends Comparable<T>> implements ILista<T>{
     private int tope; // si Tope = -1 es sin tope;
 
     @Override
-    public void setInicio(NodoLista i) {
-        this.inicio = i;
+    public void setInicio(NodoLista nodoInicio) {
+        this.inicio = nodoInicio;
+    }
+    
+    @Override
+    public void setFin(NodoLista nodoFin){
+        this.fin = nodoFin;
     }
 
+    @Override
+    public NodoLista getInicio() {
+        return this.inicio;
+    }
+
+    @Override
+    public NodoLista getFin() {
+        return this.fin;
+    }
+    
     public Lista() {
         this.inicio = null;
         this.fin = null;
         this.cantidad = 0;
-        this.tope = -1;
+        this.tope = Integer.MAX_VALUE;
     }
 
     public Lista( int tope) {
@@ -47,42 +62,27 @@ public class Lista <T extends Comparable<T>> implements ILista<T>{
     }
 
     @Override
-    public NodoLista getInicio() {
-           return this.inicio;
-    }
-
-    @Override
-    public void setFin(NodoLista f) {
-        this.fin = f;
-    }
-
-    @Override
-    public NodoLista getFin() {
-        return this.fin;
-    }
-
-    @Override
     public boolean esVacia() {
-        return (this.getInicio()==null);
+        return (this.getInicio() == null);
     }
 
     @Override
-    public void agregarInicio(NodoLista nodo) {
+    public void agregarInicio(T dato) {
         if (this.getCantidad()>this.getTope() && this.getTope()!=-1){
             return;
         }
+        NodoLista nuevoNodo = new NodoLista(dato);
         if (this.esVacia()){
-            this.setInicio(nodo);
-            this.setFin(nodo);
+            this.setInicio(nuevoNodo);
+            this.setFin(nuevoNodo);
         }
         else {
-            nodo.setSig(this.getInicio());
-            this.setInicio(nodo);
+            nuevoNodo.setSig(this.getInicio());
+            this.setInicio(nuevoNodo);
         }
         this.setCantidad(this.getCantidad()+1);
     }
 
- 
     @Override
     public void mostrar() {
         if (this.esVacia()){
@@ -97,18 +97,19 @@ public class Lista <T extends Comparable<T>> implements ILista<T>{
         System.out.println();
     }
 
-
     @Override
-    public void agregarFinal(NodoLista nodo) {
+    public void agregarFinal(T dato) {
         if (this.getCantidad()>this.getTope() && this.getTope()!=-1){
             return;
         }
+        NodoLista nuevoNodo = new NodoLista(dato);
+        
         if (this.esVacia()){
-            this.agregarInicio(nodo);
+            this.agregarInicio(dato);
         }
         else {
-            this.getFin().setSig(nodo);
-            this.setFin(nodo);
+            this.getFin().setSig(nuevoNodo);
+            this.setFin(nuevoNodo);
             this.setCantidad(this.getCantidad()+1);
         }
     }
@@ -152,28 +153,34 @@ public class Lista <T extends Comparable<T>> implements ILista<T>{
     }
 
     @Override
-    public void agregarOrd(NodoLista nodo) {
+    public void agregarOrd(T dato) {
         if (this.getCantidad()>this.getTope() && this.getTope()!=-1){
             return;
         }
         if ( this.esVacia()){
-           this.agregarInicio(nodo);
+           this.agregarInicio(dato);
            return;
         }
-        if ( this.getInicio().getDato().compareTo(nodo.getDato())>=0){
-            this.agregarInicio(nodo);
+        if ( this.getInicio().getDato().compareTo(dato) >= 0){
+            this.agregarInicio(dato);
             return;
         }
-        if ( this.getFin().getDato().compareTo(nodo.getDato())<=0){
-            this.agregarFinal(nodo);
+        if ( this.getFin().getDato().compareTo(dato) <= 0){
+            this.agregarFinal(dato);
             return;
         }
+        
         NodoLista aux = this.getInicio();
-        while (aux != null && aux.getSig() != null && aux.getSig().getDato().compareTo(nodo.getDato())<0){
+        
+        while (aux != null && aux.getSig() != null && aux.getSig().getDato().compareTo(dato) < 0){
             aux = aux.getSig();
         }
-        nodo.setSig(aux.getSig());
-        aux.setSig(nodo);        
+        
+        NodoLista nuevoNodo = new NodoLista(dato);
+        
+        nuevoNodo.setSig(aux.getSig());
+        aux.setSig(nuevoNodo);
+        
         this.setCantidad(this.getCantidad()+1);
     }
 
@@ -221,7 +228,7 @@ public class Lista <T extends Comparable<T>> implements ILista<T>{
 
     @Override
     public void mostrarREC(NodoLista nodo) {
-        if (nodo==null){
+        if (nodo == null){
             return;
         }
         System.out.println(nodo.getDato().toString());
@@ -230,7 +237,7 @@ public class Lista <T extends Comparable<T>> implements ILista<T>{
 
     @Override
     public void mostrarInversoREC(NodoLista nodo) {
-        if (nodo==null){
+        if (nodo == null){
             return;
         }
         mostrarREC(nodo.getSig());
@@ -249,38 +256,37 @@ public class Lista <T extends Comparable<T>> implements ILista<T>{
     }
 
     @Override
-    public boolean pertenece(T x) {
+    public boolean pertenece(T datoBuscado) {
         NodoLista aux = this.getInicio();
-        while (aux!=null && !aux.getDato().equals(x)){
+        
+        while (aux!=null && !aux.getDato().equals(datoBuscado)){
                 aux = aux.getSig();
-        }        
-        if (aux==null){
+        }
+        
+        if (aux == null){
             return false;
         } else {
             return true;
         }
     }
 
-
     @Override
-    public boolean perteneceR(NodoLista nodo, T x) {
-        if (nodo==null){
+    public boolean perteneceR(NodoLista nodo, T datoBuscado) {
+        if (nodo == null){
             return false;
         }
-        if ( nodo.getDato().compareTo(x)==0){
+        if ( nodo.getDato().compareTo(datoBuscado)==0){
             return true;
         }
-        return perteneceR(nodo.getSig(),x);
+        return perteneceR(nodo.getSig(),datoBuscado);
     }
     
-
     @Override
     public Lista invertir() {
         Lista nueva = new Lista();
         NodoLista aux = this.getInicio();
         while ( aux!=null){
-            NodoLista nodoNuevo = new NodoLista(aux.getDato());
-            nueva.agregarInicio(nodoNuevo);
+            nueva.agregarInicio(aux.getDato());
             aux = aux.getSig();
         }
         return nueva;
@@ -306,19 +312,17 @@ public class Lista <T extends Comparable<T>> implements ILista<T>{
         
     }   
 
-    public void insertarOrdenado (T elem){  
-        NodoLista nuevo = new NodoLista(elem);
-        this.agregarOrd(nuevo);
+    public void insertarOrdenado (T dato){  
+        this.agregarOrd(dato);
     }
-    
 
     @Override
-    public boolean esIgual(Lista p) {
-        if ( this.getCantidad()!=p.getCantidad()){
+    public boolean esIgual(Lista otraLista) {
+        if ( this.getCantidad()!=otraLista.getCantidad()){
             return false;
         }
         NodoLista aux = this.getInicio();
-        NodoLista auxP = p.getInicio();
+        NodoLista auxP = otraLista.getInicio();
         while ( aux!=null && auxP!=null && aux.getDato().equals(auxP.getDato())){
             aux = aux.getSig();
             auxP = auxP.getSig();
@@ -329,14 +333,15 @@ public class Lista <T extends Comparable<T>> implements ILista<T>{
             return false;
         }        
     }
-    public boolean esIgualREC(Lista p) {
-        if(this.getCantidad()!=p.getCantidad()){
+
+    public boolean esIgualREC(Lista otraLista) {
+        if(this.getCantidad()!= otraLista.getCantidad()){
             return false;
         }
-        if (this.esVacia() && p.esVacia()){
+        if (this.esVacia() && otraLista.esVacia()){
             return true;
         }
-        return esIgualREC(this.getInicio(),p.getInicio());
+        return esIgualREC(this.getInicio(),otraLista.getInicio());
         
     }
     
@@ -359,25 +364,21 @@ public class Lista <T extends Comparable<T>> implements ILista<T>{
         
         while (aux!=null && auxP!=null ){
             if ( aux.getDato().compareTo(auxP.getDato())>=0){
-                NodoLista nodonuevo = new NodoLista(auxP.getDato());
-                nueva.agregarFinal(nodonuevo);
+                nueva.agregarFinal(auxP.getDato());
                 auxP = auxP.getSig();
             } else {
-                NodoLista nodonuevo = new NodoLista(aux.getDato());
-                nueva.agregarFinal(nodonuevo);
+                nueva.agregarFinal(aux.getDato());
                 aux = aux.getSig();
                 
             }
         }
         while (aux!=null){
-                NodoLista nodonuevo = new NodoLista(aux.getDato());
-                nueva.agregarFinal(nodonuevo);
+                nueva.agregarFinal(aux.getDato());
                 aux = aux.getSig();            
         }
         
         while (auxP!=null){
-            NodoLista nodonuevo = new NodoLista(auxP.getDato());
-            nueva.agregarFinal(nodonuevo);
+            nueva.agregarFinal(auxP.getDato());
             auxP = auxP.getSig();            
         }
         return nueva;

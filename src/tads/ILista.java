@@ -23,11 +23,11 @@ public interface ILista <T extends Comparable<T>>{
 
     //PRE: 
     //POS: Agrega un nuevo Nodo al principio de la lista
-    public void agregarInicio(NodoLista nodo);
+    public void agregarInicio(T dato);
 
     //PRE:
     //POS: Agrega un nuevo Nodo al final de la lista
-    public void agregarFinal(NodoLista nodo);
+    public void agregarFinal(T dato);
 
     //PRE:
     //POS: Borra el primer nodo
@@ -51,7 +51,7 @@ public interface ILista <T extends Comparable<T>>{
 
     //PRE: lista ordenada => mantiena orden
     //POS: inserta nuevo elemento en orden ascendente
-    public void agregarOrd(NodoLista nodo);
+    public void agregarOrd(T dato);
         //lista vacía o primer elemento es mayor o igual => agrego al ppio
         //último elemento es menor o igual => agrego al final
 
