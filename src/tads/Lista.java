@@ -1,5 +1,8 @@
 package tads;
 
+import java.util.Iterator;
+
+
 /**
  *
  * @author Jonattan Lima
@@ -374,4 +377,5 @@ public class Lista <T extends Comparable<T>> implements ILista<T>{
         }
         return nueva;
     }
+
  }

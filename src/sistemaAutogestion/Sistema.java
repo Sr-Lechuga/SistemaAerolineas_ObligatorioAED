@@ -17,23 +17,23 @@ public class Sistema implements IObligatorio {
         listaClientes = new Lista<>();
         listaVuelos = new Lista<>();
         
-        return Retorno.ok();
+        return Retorno.ok("Se inicializo el sistema correctamente.");
     }
 
     @Override
     public Retorno crearAerolinea(String nombre, String pais, int cantMaxAviones) {
-      
-        Aerolinea nuevaAerolinea = new Aerolinea(nombre, pais, cantMaxAviones);
-        
-        if(listaAerolineas.pertenece(nuevaAerolinea)){
+
+        if(existeAerolinea(nombre)){
             return Retorno.error1();
-        }else if(nuevaAerolinea.getCantMaxAviones() <= 0){
+        }else if(cantMaxAviones <= 0){
           return Retorno.error2();
         }
         
+        Aerolinea nuevaAerolinea = new Aerolinea(nombre, pais, cantMaxAviones);
+        
         listaAerolineas.agregarInicio(nuevaAerolinea);
         
-        return Retorno.ok();
+        return Retorno.ok("Se creo la aerolinea" + nombre + " con exito.");
     }
 
     @Override
@@ -44,18 +44,41 @@ public class Sistema implements IObligatorio {
         
         if(isNull(aerolineaParaBorrar)){
             return Retorno.error1();
+        }else if(aerolineaParaBorrar.cantidadAvionesRegistrados() > 0){
+            return Retorno.error2();
         }
         
-        return Retorno.noImplementada();
+        listaAerolineas.borrarElemento(aerolineaParaBorrar);
+        return Retorno.ok("Se elimino la aerolinea " + nombre + " con exito.");
     }
 
     @Override
     public Retorno registrarAvion(String codigo, int capacidadMax, String nomAerolinea) {
-        return Retorno.noImplementada();
+        
+        Aerolinea aerolineaBuscada = obtenerAerolinea(nomAerolinea);
+        
+        if(isNull(aerolineaBuscada)){
+            return Retorno.error3();
+        }
+        
+        Retorno retorno = aerolineaBuscada.registrarAvion(codigo, capacidadMax);
+        
+        return retorno;
     }
 
     @Override
     public Retorno eliminarAvion(String nomAerolinea, String codAvion) {
+        
+        Aerolinea aerolineaBuscada = obtenerAerolinea(nomAerolinea);
+        
+        if(isNull(aerolineaBuscada)){
+            return Retorno.error1();
+        }else if(!aerolineaBuscada.existeAvion(codAvion)){
+            return Retorno.error2();
+        }
+        
+        
+
         return Retorno.noImplementada();
     }
 
@@ -114,7 +137,20 @@ public class Sistema implements IObligatorio {
         return Retorno.noImplementada();
     }
 
+    // ----------------------------------------------- Auxiliar Methods
     private boolean isNull(Object dato){
         return dato == null;
+    }
+    
+    private boolean existeAerolinea(String nombreAerolinea){
+        //Dummy object para busqueda
+        Aerolinea aerolineaBuscada = new Aerolinea(nombreAerolinea, "", 0);
+        return listaAerolineas.pertenece(aerolineaBuscada);
+    }
+
+    private Aerolinea obtenerAerolinea(String nomAerolinea) {
+        //Dummy object to search
+        Aerolinea aerolineaBuscada = new Aerolinea(nomAerolinea, "", 0);
+        return (Aerolinea)listaAerolineas.obtenerElemento(aerolineaBuscada).getDato();
     }
 }

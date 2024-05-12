@@ -1,15 +1,15 @@
 package dominio;
 
 import java.util.Objects;
+import sistemaAutogestion.Retorno;
 
 /**
  *
  * @author Jonattan Lima
  */
-public class Avion implements Comparable<Avion>{
+public class Avion implements Comparable<Avion>,IValidable{
   private String codigo;
   private int capacidadMax;
-  private String nomAerolinea;
 
   public String getCodigo() {
     return codigo;
@@ -25,14 +25,6 @@ public class Avion implements Comparable<Avion>{
 
   public void setCapacidadMax(int capacidadMax) {
     this.capacidadMax = capacidadMax;
-  }
-
-  public String getNomAerolinea() {
-    return nomAerolinea;
-  }
-
-  public void setNomAerolinea(String nomAerolinea) {
-    this.nomAerolinea = nomAerolinea;
   }
 
   public Avion(String codigo, int capacidadMax) {
@@ -56,9 +48,22 @@ public class Avion implements Comparable<Avion>{
   }
 
   @Override
-  public int compareTo(Avion o) {
-    throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+  public int compareTo(Avion otroAvion) {
+      //Compara un avion con otro segun su codigo
+      return this.getCodigo().compareTo(otroAvion.getCodigo());
   }
-  
-  
+
+    @Override
+    public Retorno Validar() {
+        return ValidarCapacidadMaxima();
+    }
+
+    private Retorno ValidarCapacidadMaxima() {
+        
+        if(this.getCapacidadMax() < 9 || this.getCapacidadMax() % 3 != 0){
+            return Retorno.error2();
+        }else{
+            return Retorno.ok();
+        }
+    }
 }

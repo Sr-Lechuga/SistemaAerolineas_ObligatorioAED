@@ -10,6 +10,10 @@ public class Retorno {
     boolean valorbooleano;
     Resultado resultado;
 
+    public Resultado getResultado(){
+        return this.resultado;
+    }
+    
     public Retorno(Resultado resultado) {
         this.resultado = resultado;
     }
