@@ -66,4 +66,11 @@ public class Avion implements Comparable<Avion>,IValidable{
             return Retorno.ok();
         }
     }
+
+    @Override
+    public String toString() {
+        return codigo + "-" + capacidadMax;
+    }
+    
+    
 }

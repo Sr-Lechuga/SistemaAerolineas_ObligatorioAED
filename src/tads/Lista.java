@@ -94,7 +94,7 @@ public class Lista <T extends Comparable<T>> implements ILista<T>{
         }
         NodoLista aux = this.getInicio();
         while (aux!=null) {
-            System.out.println(aux.getDato().toString()+"-");
+            System.out.println(aux.getDato().toString()+"|");
             aux = aux.getSig();
         }
         System.out.println();

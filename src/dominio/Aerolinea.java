@@ -38,6 +38,10 @@ public class Aerolinea implements Comparable<Aerolinea>{
     this.cantidadMaximaAviones = cantMaxAviones;
   }
 
+    public Lista<Avion> getListaAviones() {
+        return listaAviones;
+    }
+
   public Aerolinea(String nombre, String pais, int cantMaxAviones) {
     this.nombre = nombre;
     this.pais = pais;
@@ -96,4 +100,11 @@ public class Aerolinea implements Comparable<Aerolinea>{
       listaAviones.agregarFinal(nuevoAvion);
       return Retorno.ok();
   }
+
+    @Override
+    public String toString() {
+        return nombre + "-" + pais + "-" + cantidadMaximaAviones;
+    }
+  
+  
 }

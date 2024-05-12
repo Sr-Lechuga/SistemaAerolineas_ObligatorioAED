@@ -104,12 +104,21 @@ public class Sistema implements IObligatorio {
 
     @Override
     public Retorno listarAerolineas() {
-        return Retorno.noImplementada();
+        listaAerolineas.mostrar();
+        return Retorno.ok();
     }
 
     @Override
     public Retorno listarAvionesDeAerolinea(String nombre) {
-        return Retorno.noImplementada();
+        Aerolinea aerolineaBuscada = new Aerolinea(nombre, "", 0);
+        aerolineaBuscada = (Aerolinea)listaAerolineas.obtenerElemento(aerolineaBuscada).getDato();
+        
+        if(isNull(aerolineaBuscada)){
+            return Retorno.error1();
+        }
+        aerolineaBuscada.getListaAviones().mostrar();
+        
+        return Retorno.ok();
     }
 
     @Override
