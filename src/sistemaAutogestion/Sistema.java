@@ -15,6 +15,11 @@ public class Sistema implements IObligatorio {
 
     @Override
     public Retorno crearSistemaDeGestion(){
+        aerolineas = new Lista<>();
+        aviones = new Lista<>();
+        clientes = new Lista<>();
+        vuelos = new Lista<>();
+        
         return Retorno.ok();
     }
 
@@ -36,7 +41,16 @@ public class Sistema implements IObligatorio {
 
     @Override
     public Retorno eliminarAerolinea(String nombre) {
-        return Retorno.noImplementada();
+        
+        Aerolinea aerolineaParaBorrar = new Aerolinea(nombre, "", 0);
+        aerolineaParaBorrar = (Aerolinea)aerolineas.obtenerElemento(aerolineaParaBorrar).getDato();
+        
+        if(isNull(aerolineaParaBorrar)){
+            return Retorno.error1();
+        }
+        
+        if(aerolineaParaBorrar.)
+        
     }
 
     @Override
@@ -104,4 +118,7 @@ public class Sistema implements IObligatorio {
         return Retorno.noImplementada();
     }
 
+    private boolean isNull(Object dato){
+        return dato == null;
+    }
 }

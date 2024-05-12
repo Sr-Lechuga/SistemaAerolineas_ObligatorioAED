@@ -153,6 +153,7 @@ public class Lista <T extends Comparable<T>> implements ILista<T>{
     }
 
     @Override
+    @SuppressWarnings("null")
     public void agregarOrd(T dato) {
         if (this.getCantidad()>this.getTope() && this.getTope()!=-1){
             return;
@@ -263,11 +264,7 @@ public class Lista <T extends Comparable<T>> implements ILista<T>{
                 aux = aux.getSig();
         }
         
-        if (aux == null){
-            return false;
-        } else {
-            return true;
-        }
+        return aux != null;
     }
 
     @Override
@@ -304,12 +301,8 @@ public class Lista <T extends Comparable<T>> implements ILista<T>{
         while (aux.getSig()!=null && aux.getDato().compareTo(aux.getSig().getDato())<=0){
             aux = aux.getSig();
         }
-        if (aux.getSig()!=null){
-            return false;
-        } else {
-            return true;
-        }
         
+        return aux.getSig() == null;
     }   
 
     public void insertarOrdenado (T dato){  
@@ -327,11 +320,8 @@ public class Lista <T extends Comparable<T>> implements ILista<T>{
             aux = aux.getSig();
             auxP = auxP.getSig();
         }
-        if ( aux==null && auxP==null){
-            return true;
-        } else {
-            return false;
-        }        
+        
+        return aux==null && auxP==null;        
     }
 
     public boolean esIgualREC(Lista otraLista) {
@@ -345,11 +335,12 @@ public class Lista <T extends Comparable<T>> implements ILista<T>{
         
     }
     
+    @SuppressWarnings("null")
     public boolean esIgualREC( NodoLista nodo, NodoLista nodoP){
         if (nodo==null && nodoP==null){
             return true;
         }
-        if (!nodo.getDato().equals(nodoP.getDato())){
+        else if (!nodo.getDato().equals(nodoP.getDato())){
             return false;
         }
         return esIgualREC(nodo.getSig(),nodoP.getSig());

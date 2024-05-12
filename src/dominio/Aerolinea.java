@@ -1,6 +1,7 @@
 package dominio;
 
 import java.util.Objects;
+import tads.Lista;
 
 /**
  *
@@ -10,6 +11,7 @@ public class Aerolinea implements Comparable<Aerolinea>{
   private String nombre;
   private String pais;
   private int cantMaxAviones;
+  private Lista<Avion> aviones;
 
   public String getNombre() {
     return nombre;

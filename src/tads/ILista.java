@@ -6,56 +6,50 @@ package tads;
  */
 public interface ILista <T extends Comparable<T>>{
        
-        
-    //Inicio
-    public void setInicio(NodoLista i);
+    //Getters
     public NodoLista getInicio();
-
-    //Fin
-    public void setFin(NodoLista f);
     public NodoLista getFin();
 
-    /*****Basic Methods*****/
+    //Setters
+    public void setFin(NodoLista f);
+    public void setInicio(NodoLista i);
 
-    //PRE:
+    //PRE: Lista vacia o con informacion
     //POS: Retorna true si la lista no tiene nodos
     public boolean esVacia();
 
-    //PRE: 
+    //PRE: Lista vacia o con informacion
     //POS: Agrega un nuevo Nodo al principio de la lista
     public void agregarInicio(T dato);
 
-    //PRE:
+    //PRE: Lista vacia o con informacion
     //POS: Agrega un nuevo Nodo al final de la lista
     public void agregarFinal(T dato);
 
-    //PRE:
+    //PRE: Lista vacia o con informacion
     //POS: Borra el primer nodo
     public void borrarInicio();
 
-    //PRE:
+    //PRE: Lista vacia o con informacion
     //POS: Borra el último nodo
     public void borrarFin();
 
- //PRE:
-    //POS: elimina todos los nodos de una lista dada
+    //PRE: Lista vacia o con informacion
+    //POS: Elimina todos los nodos de una lista dada
     public void vaciar();
-        //en java alcanza con apuntar inicio y fin a null
-        //inicio=fin=null;
 
-    //PRE:
-    //POS: Recorre y muestra los datos de lista
+    //PRE: Lista vacia o con informacion
+    //POS: Recorre y muestra los datos de lista. En caso de ser vacia no muestra nada.
     public void mostrar();
 
-/***** Other Methods (Iterative)*****/
-
-    //PRE: lista ordenada => mantiena orden
-    //POS: inserta nuevo elemento en orden ascendente
+    //PRE: Lista ordenada ascendentemente => mantiena orden
+    //POS: Inserta nuevo elemento en orden ascendente
     public void agregarOrd(T dato);
-        //lista vacía o primer elemento es mayor o igual => agrego al ppio
-        //último elemento es menor o igual => agrego al final
+    /* Lista vacía o primer elemento es mayor o igual => agrego al ppio
+        último elemento es menor o igual => agrego al final
+    */
 
-    //PRE: lista ordenada
+    //PRE: Lista ordenada ascendentemente
     //POS: Borra la primer ocurrencia de un elemento dado
     public void borrarElemento(T dato);
     
@@ -64,37 +58,42 @@ public interface ILista <T extends Comparable<T>>{
     public int cantElementos();
 
     //PRE: Se recibe un dato a buscar en la lista
-    //POS: Retorna un puntero al nodo que contiene el dato
-//            Si el elemento no se encuentra retorna null
+    /*POS: Retorna un puntero al nodo que contiene el dato. Si el elemento no se encuentra retorna null*/
     public NodoLista obtenerElemento(T dato);
 
-    
-    /*****  Métodos RECURSIVOS  *****/
-
-    //PRE:
-    //POS: muestra los datos de la lista en orden de enlace
+    //PRE: Lista vacia o con datos
+    //POS: Muestra los datos de la lista en orden de enlace
     public void mostrarREC(NodoLista nodo);
 
-    //PRE:
-    //POS: muestra los datos de la lista en orden inverso
+    //PRE: Lista ordenada o no, con o sin datos
+    //POS: Muestra los datos de la lista en orden inverso
     public void mostrarInversoREC(NodoLista nodo);
-
     
-    //PRE:
-    //POS: retorna true si el elemento pertenece a la lista
+    //PRE: Lista ordenada con o sin datos
+    //POS: Retorna true si el elemento pertenece a la lista
     public boolean existeDatoREC(NodoLista nodo, T n);
 
-    public  boolean pertenece (T x);
-     
+    //PRE: Lista vacia o con datos
+    //POS: Retorna verdadero si el dato pertenece a la lista
+    public  boolean pertenece (T dato);
+    
+    //PRE: Lista vacia o con datos
+    //POS: Lista con los datos invertidos en orden de enlace
     public Lista invertir();
     
+    //PRE: Lista vacia o con datos
+    //POS: Devuelve true si la lista esta ordenada ascendentemente. De lo contrario devuelve false
     public boolean estaOrdenada ();    
     
-    public boolean perteneceR(NodoLista nodo,T x);
+    //PRE: Lista vacia o con datos
+    //POS: Deveulve si un dato pertenece a una lista a partir de un nodo
+    public boolean perteneceR(NodoLista nodo,T dato);
 
+    //PRE: Dos listas vacias o con datos
+    //POS: Devuelve true si las listas son iguales en todo su contenido y orden
     public boolean esIgual(Lista p);
     
-    // PRE: Las listas estan ordenadas
-    // POS: devuelve una lista ordenada conteniendo ambas listas 
+    // PRE: Dos listas ordenadas
+    // POS: Devuelve una lista ordenada conteniendo ambas listas 
     public Lista intercalar(Lista p);
 }
