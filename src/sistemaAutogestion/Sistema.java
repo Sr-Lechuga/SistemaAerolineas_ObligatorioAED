@@ -1,24 +1,21 @@
 package sistemaAutogestion;
 
 import dominio.Aerolinea;
-import dominio.Avion;
 import dominio.Cliente;
 import dominio.Vuelo;
 import tads.Lista;
 
 public class Sistema implements IObligatorio {
 
-    private Lista<Aerolinea> aerolineas;
-    private Lista<Avion> aviones;
-    private Lista<Cliente> clientes;
-    private Lista<Vuelo> vuelos;
+    private Lista<Aerolinea> listaAerolineas;
+    private Lista<Cliente> listaClientes;
+    private Lista<Vuelo> listaVuelos;
 
     @Override
     public Retorno crearSistemaDeGestion(){
-        aerolineas = new Lista<>();
-        aviones = new Lista<>();
-        clientes = new Lista<>();
-        vuelos = new Lista<>();
+        listaAerolineas = new Lista<>();
+        listaClientes = new Lista<>();
+        listaVuelos = new Lista<>();
         
         return Retorno.ok();
     }
@@ -28,13 +25,13 @@ public class Sistema implements IObligatorio {
       
         Aerolinea nuevaAerolinea = new Aerolinea(nombre, pais, cantMaxAviones);
         
-        if(aerolineas.pertenece(nuevaAerolinea)){
+        if(listaAerolineas.pertenece(nuevaAerolinea)){
             return Retorno.error1();
         }else if(nuevaAerolinea.getCantMaxAviones() <= 0){
           return Retorno.error2();
         }
         
-        aerolineas.agregarInicio(nuevaAerolinea);
+        listaAerolineas.agregarInicio(nuevaAerolinea);
         
         return Retorno.ok();
     }
@@ -43,14 +40,13 @@ public class Sistema implements IObligatorio {
     public Retorno eliminarAerolinea(String nombre) {
         
         Aerolinea aerolineaParaBorrar = new Aerolinea(nombre, "", 0);
-        aerolineaParaBorrar = (Aerolinea)aerolineas.obtenerElemento(aerolineaParaBorrar).getDato();
+        aerolineaParaBorrar = (Aerolinea)listaAerolineas.obtenerElemento(aerolineaParaBorrar).getDato();
         
         if(isNull(aerolineaParaBorrar)){
             return Retorno.error1();
         }
         
-        if(aerolineaParaBorrar.)
-        
+        return Retorno.noImplementada();
     }
 
     @Override
