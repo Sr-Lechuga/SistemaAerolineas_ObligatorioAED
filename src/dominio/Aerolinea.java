@@ -89,7 +89,7 @@ public class Aerolinea implements Comparable<Aerolinea>{
       
       Avion nuevoAvion = new Avion(codigoAvion, CapacidadMaxima);
       
-      if(cantidadAvionesRegistrados() >= cantidadMaximaAviones){
+      if(cantidadAvionesRegistrados() < cantidadMaximaAviones){
           return Retorno.error4();
       }else if(nuevoAvion.Validar().getResultado() == Retorno.Resultado.ERROR_2){
           return Retorno.error2();
@@ -99,6 +99,18 @@ public class Aerolinea implements Comparable<Aerolinea>{
 
       listaAviones.agregarFinal(nuevoAvion);
       return Retorno.ok();
+  }
+  
+  public Retorno EliminarAvion (String codigoAvion){
+      Avion avionBuscado = obtenerAvion(codigoAvion);
+        if(avionBuscado == null){
+            return Retorno.error2();
+        }
+        else if (avionBuscado.getListaVuelos().getCantidad() > 0){
+            return Retorno.error3();
+        }
+        listaAviones.borrarElemento(avionBuscado);
+        return Retorno.ok();
   }
 
     @Override

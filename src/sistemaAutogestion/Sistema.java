@@ -1,6 +1,7 @@
 package sistemaAutogestion;
 
 import dominio.Aerolinea;
+import dominio.Avion;
 import dominio.Cliente;
 import dominio.Vuelo;
 import tads.Lista;
@@ -72,16 +73,15 @@ public class Sistema implements IObligatorio {
         Aerolinea aerolineaBuscada = obtenerAerolinea(nomAerolinea);
         
         if(isNull(aerolineaBuscada)){
-            return Retorno.error1();
-        }else if(!aerolineaBuscada.existeAvion(codAvion)){
-            return Retorno.error2();
-        }
+            return Retorno.error1();    
+        } 
         
-        
+        Retorno retorno = aerolineaBuscada.EliminarAvion(codAvion);
 
-        return Retorno.noImplementada();
+        return retorno;
     }
 
+    
     @Override
     public Retorno registrarCliente(String pasaporte, String nombre, int edad) {
         return Retorno.noImplementada();

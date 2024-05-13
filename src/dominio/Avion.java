@@ -2,6 +2,7 @@ package dominio;
 
 import java.util.Objects;
 import sistemaAutogestion.Retorno;
+import tads.Lista;
 
 /**
  *
@@ -10,6 +11,7 @@ import sistemaAutogestion.Retorno;
 public class Avion implements Comparable<Avion>,IValidable{
   private String codigo;
   private int capacidadMax;
+  private Lista<String> listaCodigosVuelos;
 
   public String getCodigo() {
     return codigo;
@@ -27,10 +29,20 @@ public class Avion implements Comparable<Avion>,IValidable{
     this.capacidadMax = capacidadMax;
   }
 
-  public Avion(String codigo, int capacidadMax) {
-    this.codigo = codigo;
-    this.capacidadMax = capacidadMax;
-  }
+    public Lista<String> getListaVuelos() {
+        return listaCodigosVuelos;
+    }
+
+    public void setListaVuelos(Lista<String> listaVuelos) {
+        this.listaCodigosVuelos = listaVuelos;
+    }
+
+    public Avion(String codigo, int capacidadMax){
+        this.codigo = codigo;
+        this.capacidadMax = capacidadMax;
+        this.listaCodigosVuelos = new Lista<String>();
+    }
+  
 
   @Override
   public boolean equals(Object obj) {
@@ -67,10 +79,34 @@ public class Avion implements Comparable<Avion>,IValidable{
         }
     }
 
+    public Retorno AgregarCodigoVuelo(String codigoVuelo){
+        if(PerteneceCodigoVuelo(codigoVuelo)){
+            return Retorno.error1();
+        }
+        listaCodigosVuelos.agregarInicio(codigoVuelo);
+        return Retorno.ok();
+    }
+    
+    public Retorno EliminarCodigoVuelo(String codigoVuelo){
+        if (!PerteneceCodigoVuelo(codigoVuelo)){
+            return Retorno.error1();
+        }
+        listaCodigosVuelos.borrarElemento(codigoVuelo);
+        return Retorno.ok();
+    }
+    
+    public boolean PerteneceCodigoVuelo (String codigoVuelo){
+        return listaCodigosVuelos.pertenece(codigoVuelo);
+    }
+    
+    
+    
     @Override
     public String toString() {
         return codigo + "-" + capacidadMax;
     }
+    
+   
     
     
 }
