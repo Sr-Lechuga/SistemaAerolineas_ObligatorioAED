@@ -40,7 +40,7 @@ public interface ILista <T extends Comparable<T>>{
 
     //PRE: Lista vacia o con informacion
     //POS: Recorre y muestra los datos de lista. En caso de ser vacia no muestra nada.
-    public void mostrar();
+    public String mostrar();
 
     //PRE: Lista ordenada ascendentemente => mantiena orden
     //POS: Inserta nuevo elemento en orden ascendente

@@ -1,7 +1,6 @@
 package sistemaAutogestion;
 
 import dominio.Aerolinea;
-import dominio.Avion;
 import dominio.Cliente;
 import dominio.Vuelo;
 import tads.Lista;
@@ -18,7 +17,7 @@ public class Sistema implements IObligatorio {
         listaClientes = new Lista<>();
         listaVuelos = new Lista<>();
         
-        return Retorno.ok("Se inicializo el sistema correctamente.");
+        return Retorno.ok();
     }
 
     @Override
@@ -32,35 +31,36 @@ public class Sistema implements IObligatorio {
         
         Aerolinea nuevaAerolinea = new Aerolinea(nombre, pais, cantMaxAviones);
         
-        listaAerolineas.agregarInicio(nuevaAerolinea);
+        listaAerolineas.agregarOrd(nuevaAerolinea);
         
-        return Retorno.ok("Se creo la aerolinea" + nombre + " con exito.");
+        return Retorno.ok();
     }
 
     @Override
     public Retorno eliminarAerolinea(String nombre) {
         
+        if(!existeAerolinea(nombre)){
+            return Retorno.error1();
+        }
         Aerolinea aerolineaParaBorrar = new Aerolinea(nombre, "", 0);
         aerolineaParaBorrar = (Aerolinea)listaAerolineas.obtenerElemento(aerolineaParaBorrar).getDato();
         
-        if(isNull(aerolineaParaBorrar)){
-            return Retorno.error1();
-        }else if(aerolineaParaBorrar.cantidadAvionesRegistrados() > 0){
+        if(aerolineaParaBorrar.cantidadAvionesRegistrados() > 0){
             return Retorno.error2();
         }
         
         listaAerolineas.borrarElemento(aerolineaParaBorrar);
-        return Retorno.ok("Se elimino la aerolinea " + nombre + " con exito.");
+        return Retorno.ok();
     }
 
     @Override
     public Retorno registrarAvion(String codigo, int capacidadMax, String nomAerolinea) {
         
-        Aerolinea aerolineaBuscada = obtenerAerolinea(nomAerolinea);
-        
-        if(isNull(aerolineaBuscada)){
+        if(!existeAerolinea(nomAerolinea)){
             return Retorno.error3();
         }
+        
+        Aerolinea aerolineaBuscada = obtenerAerolinea(nomAerolinea);
         
         Retorno retorno = aerolineaBuscada.registrarAvion(codigo, capacidadMax);
         
@@ -70,12 +70,11 @@ public class Sistema implements IObligatorio {
     @Override
     public Retorno eliminarAvion(String nomAerolinea, String codAvion) {
         
+        if(!existeAerolinea(nomAerolinea)){
+            return Retorno.error1(); 
+        }
         Aerolinea aerolineaBuscada = obtenerAerolinea(nomAerolinea);
-        
-        if(isNull(aerolineaBuscada)){
-            return Retorno.error1();    
-        } 
-        
+
         Retorno retorno = aerolineaBuscada.EliminarAvion(codAvion);
 
         return retorno;
@@ -104,21 +103,21 @@ public class Sistema implements IObligatorio {
 
     @Override
     public Retorno listarAerolineas() {
-        listaAerolineas.mostrar();
-        return Retorno.ok();
+        Retorno retorno = Retorno.ok(listaAerolineas.mostrar());
+        return retorno;
     }
 
     @Override
     public Retorno listarAvionesDeAerolinea(String nombre) {
         Aerolinea aerolineaBuscada = new Aerolinea(nombre, "", 0);
-        aerolineaBuscada = (Aerolinea)listaAerolineas.obtenerElemento(aerolineaBuscada).getDato();
-        
-        if(isNull(aerolineaBuscada)){
+        if(!existeAerolinea(nombre)){
             return Retorno.error1();
         }
-        aerolineaBuscada.getListaAviones().mostrar();
         
-        return Retorno.ok();
+        aerolineaBuscada = (Aerolinea)listaAerolineas.obtenerElemento(aerolineaBuscada).getDato();
+        Retorno retorno = Retorno.ok(aerolineaBuscada.getListaAviones().mostrar());
+        
+        return retorno;
     }
 
     @Override

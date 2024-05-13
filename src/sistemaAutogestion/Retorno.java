@@ -20,6 +20,7 @@ public class Retorno {
 
     public Retorno(Resultado resultado, String valorString) {
         this.resultado = resultado;
+        this.valorString = valorString;
     }
 
     public static Retorno noImplementada() {

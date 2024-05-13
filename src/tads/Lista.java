@@ -87,17 +87,18 @@ public class Lista <T extends Comparable<T>> implements ILista<T>{
     }
 
     @Override
-    public void mostrar() {
+    public String mostrar() {
+        String textoLista = "";
         if (this.esVacia()){
-            System.out.println("La lista está vacia");
-            return;
+            return textoLista;
         }
         NodoLista aux = this.getInicio();
-        while (aux!=null) {
-            System.out.println(aux.getDato().toString()+"|");
+        while (aux != getFin()) {
+            textoLista = textoLista.concat(aux.getDato().toString()+"|\n");
             aux = aux.getSig();
         }
-        System.out.println();
+        textoLista = textoLista.concat(aux.getDato().toString()+"|");
+        return textoLista;
     }
 
     @Override
