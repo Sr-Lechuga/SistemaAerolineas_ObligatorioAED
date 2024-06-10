@@ -8,105 +8,101 @@ import tads.Lista;
  *
  * @author Jonattan Lima
  */
-public class Avion implements Comparable<Avion>,IValidable{
-  private String codigo;
-  private int capacidadMax;
-  private Lista<String> listaCodigosVuelos;
+public class Avion implements Comparable<Avion>, IValidable {
 
-  public String getCodigo() {
-    return codigo;
-  }
+    private String codigo;
+    private int capacidadMax;
+    private Lista<String> listaCodigosVuelos;
 
-  public void setCodigo(String codigo) {
-    this.codigo = codigo;
-  }
+    public String getCodigo() {
+        return codigo;
+    }
 
-  public int getCapacidadMax() {
-    return capacidadMax;
-  }
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
 
-  public void setCapacidadMax(int capacidadMax) {
-    this.capacidadMax = capacidadMax;
-  }
+    public int getCapacidadMax() {
+        return capacidadMax;
+    }
 
-    public Lista<String> getListaVuelos() {
+    public void setCapacidadMax(int capacidadMax) {
+        this.capacidadMax = capacidadMax;
+    }
+
+    public Lista<String> getListaCodigosVuelos() {
         return listaCodigosVuelos;
     }
 
-    public void setListaVuelos(Lista<String> listaVuelos) {
+    public void setListaCodigosVuelos(Lista<String> listaVuelos) {
         this.listaCodigosVuelos = listaVuelos;
     }
 
-    public Avion(String codigo, int capacidadMax){
+    public Avion(String codigo, int capacidadMax) {
         this.codigo = codigo;
         this.capacidadMax = capacidadMax;
         this.listaCodigosVuelos = new Lista<String>();
     }
-  
 
-  @Override
-  public boolean equals(Object obj) {
-    if (this == obj) {
-      return true;
-    }
-    if (obj == null) {
-      return false;
-    }
-    if (getClass() != obj.getClass()) {
-      return false;
-    }
-    final Avion other = (Avion) obj;
-    return Objects.equals(this.codigo, other.codigo);
-  }
+    // ---------------------------------------------------------------------------------------- Methods
+    private Retorno validarCapacidadMaxima() {
 
-  @Override
-  public int compareTo(Avion otroAvion) {
-      //Compara un avion con otro segun su codigo
-      return this.getCodigo().compareTo(otroAvion.getCodigo());
-  }
-
-    @Override
-    public Retorno Validar() {
-        return ValidarCapacidadMaxima();
-    }
-
-    private Retorno ValidarCapacidadMaxima() {
-        
-        if(this.getCapacidadMax() < 9 || this.getCapacidadMax() % 3 != 0){
+        if (this.getCapacidadMax() < 9 || this.getCapacidadMax() % 3 != 0) {
             return Retorno.error2();
-        }else{
+        } else {
             return Retorno.ok();
         }
     }
 
-    public Retorno AgregarCodigoVuelo(String codigoVuelo){
-        if(PerteneceCodigoVuelo(codigoVuelo)){
+    public Retorno agregarCodigoVuelo(String codigoVuelo) {
+        if (perteneceCodigoVuelo(codigoVuelo)) {
             return Retorno.error1();
         }
-        listaCodigosVuelos.agregarInicio(codigoVuelo);
+        listaCodigosVuelos.agregarOrd(codigoVuelo);
         return Retorno.ok();
     }
-    
-    public Retorno EliminarCodigoVuelo(String codigoVuelo){
-        if (!PerteneceCodigoVuelo(codigoVuelo)){
+
+    public Retorno eliminarCodigoVuelo(String codigoVuelo) {
+        if (!perteneceCodigoVuelo(codigoVuelo)) {
             return Retorno.error1();
         }
         listaCodigosVuelos.borrarElemento(codigoVuelo);
         return Retorno.ok();
     }
-    
-    public boolean PerteneceCodigoVuelo (String codigoVuelo){
+
+    public boolean perteneceCodigoVuelo(String codigoVuelo) {
         return listaCodigosVuelos.pertenece(codigoVuelo);
     }
     
-    
-    
+    // ---------------------------------------------------------------------------------------- Overrided
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Avion other = (Avion) obj;
+        return Objects.equals(this.codigo, other.codigo);
+    }
+
+    @Override
+    public int compareTo(Avion otroAvion) {
+        //Compara un avion con otro segun su codigo
+        return this.getCodigo().compareTo(otroAvion.getCodigo());
+    }
+
+    @Override
+    public Retorno validar() {
+        return validarCapacidadMaxima();
+    }
+
     @Override
     public String toString() {
         return codigo + "-" + capacidadMax;
     }
-    
-   
-    
-    
 }

@@ -11,9 +11,9 @@ public class Cliente implements Comparable<Cliente>{
   private String nombre;
   private int edad;
 
-  public String getPasaporte() {
-    return pasaporte;
-  }
+    public String getPasaporte() {
+        return pasaporte;
+    }
 
   public void setPasaporte(String pasaporte) {
     this.pasaporte = pasaporte;
@@ -41,6 +41,7 @@ public class Cliente implements Comparable<Cliente>{
     this.edad = edad;
   }
 
+  // ----------------------------------------------------------------------------- Overrided Methods
   @Override
   public boolean equals(Object obj) {
     if (this == obj) {
@@ -57,7 +58,14 @@ public class Cliente implements Comparable<Cliente>{
   }
 
   @Override
-  public int compareTo(Cliente o) {
-    throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+  public int compareTo(Cliente otro) {
+    return this.getPasaporte().compareTo(otro.getPasaporte());
   }
+
+    @Override
+    public String toString() {
+        return pasaporte + "-" + nombre + "-" + edad;
+    }
+  
+  
 }

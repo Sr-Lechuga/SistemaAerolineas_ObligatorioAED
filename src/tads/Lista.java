@@ -102,6 +102,20 @@ public class Lista <T extends Comparable<T>> implements ILista<T>{
     }
 
     @Override
+    public String mostrarREC(NodoLista nodo) {
+        String textoLista = "";
+        if (nodo == null){
+            return "";
+        }
+        if(nodo != this.getFin()){
+            textoLista = textoLista.concat(nodo.getDato().toString()+"|\n");
+        }else{
+            textoLista = textoLista.concat(nodo.getDato().toString()+"|");
+        }
+        return textoLista.concat(mostrarREC(nodo.getSig()));
+    }
+
+    @Override
     public void agregarFinal(T dato) {
         if (this.getCantidad()>this.getTope() && this.getTope()!=-1){
             return;
@@ -229,15 +243,6 @@ public class Lista <T extends Comparable<T>> implements ILista<T>{
             return aux;
         }
         return null;
-    }
-
-    @Override
-    public void mostrarREC(NodoLista nodo) {
-        if (nodo == null){
-            return;
-        }
-        System.out.println(nodo.getDato().toString());
-        mostrarREC(nodo.getSig());
     }
 
     @Override
@@ -378,5 +383,4 @@ public class Lista <T extends Comparable<T>> implements ILista<T>{
         }
         return nueva;
     }
-
  }

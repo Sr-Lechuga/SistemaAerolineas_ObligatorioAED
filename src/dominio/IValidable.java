@@ -7,5 +7,5 @@ import sistemaAutogestion.Retorno;
  * @author jlima
  */
 public interface IValidable {
-    public Retorno Validar();
+    public Retorno validar();
 }

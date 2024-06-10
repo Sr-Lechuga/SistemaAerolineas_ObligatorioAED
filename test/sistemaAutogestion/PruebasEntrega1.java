@@ -8,11 +8,11 @@ import static org.junit.Assert.*;
  *
  * @author Jonattan Lima
  */
-public class IObligatorioTest {
+public class PruebasEntrega1 {
 
     private Sistema miSistema;
 
-    public IObligatorioTest() {
+    public PruebasEntrega1() {
     }
 
     @Before

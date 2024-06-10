@@ -63,7 +63,7 @@ public interface ILista <T extends Comparable<T>>{
 
     //PRE: Lista vacia o con datos
     //POS: Muestra los datos de la lista en orden de enlace
-    public void mostrarREC(NodoLista nodo);
+    public String mostrarREC(NodoLista nodo);
 
     //PRE: Lista ordenada o no, con o sin datos
     //POS: Muestra los datos de la lista en orden inverso

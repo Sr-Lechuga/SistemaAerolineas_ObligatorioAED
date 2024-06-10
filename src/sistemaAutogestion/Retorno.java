@@ -54,5 +54,9 @@ public class Retorno {
     public static Retorno error5() {
         return new Retorno(Resultado.ERROR_5);
     }
+    
+    public static Retorno error6() {
+        return new Retorno(Resultado.ERROR_6);
+    }
 
 }
